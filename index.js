@@ -65,12 +65,16 @@ num.forEach(button => {
 operator.forEach(button => {
     button.addEventListener('click', () => {
         if(!num1){
-            op= button.textContent;
-            num1= display.textContent;
+            if(button.textContent == '-'){
+                display.textContent += button.textContent;
+            } else{
+                op= button.textContent;
+                num1= display.textContent;
+            }
         } else if(num1 && num2 || op == '='){
             result = operate(op,num1,num2);
                 num1 = result;
-                display.textContent = result;
+                display.textContent = result.toFixed(2);
                 num2 = ''
         } else if(op != '='){
                 op = button.textContent;
@@ -89,5 +93,7 @@ clear.addEventListener('click', () => {
 
 undo.addEventListener('click', () => {
     display.textContent = display.textContent.slice(0,display.textContent.length-1);
-    num2 = display.textContent;
+    if(num1){   
+        num2 = display.textContent;
+    }
 })
