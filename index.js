@@ -3,6 +3,11 @@ const operator = document.querySelectorAll('.btn.op');
 const display = document.querySelector('.display-value');
 const clear = document.querySelector('.btn.clear');
 
+let num1;
+let num2='';
+let op;
+let result;
+
 function add(a,b){
     return +a + +b;
 }
@@ -38,11 +43,12 @@ function operate(op, num1, num2){
    return operationResult;
 }
 
-let num1;
-let num2='';
-let op;
-let result;
-
+function cleanVars (){
+    display.textContent = ''
+    num1 = '';
+    num2 = '';
+    op = '';
+}
 
 num.forEach(button => {
     button.addEventListener('click', () => {
@@ -60,26 +66,23 @@ operator.forEach(button => {
         if(!num1){
             op= button.textContent;
             num1= display.textContent;
-        } else if(num1 && num2){
+        } else if(num1 && num2 || op == '='){
             result = operate(op,num1,num2);
-            num1 = result;
-            display.textContent = result;
-            num2 = ''
-        } else if(op){
-            if(op == '='){
-
-            }else{
+                num1 = result;
+                display.textContent = result;
+                num2 = ''
+        } else if(op != '='){
                 op = button.textContent;
-            }
+        }
+         if (num1 == 'ERROR'){
+            setTimeout(()=>{
+                cleanVars();
+            },500)
         }
     })
 })
 
 clear.addEventListener('click', () => {
-    display.textContent = ''
-    num1 = '';
-    num2 = '';
-    op = '';
+    cleanVars();
 });
-
 
