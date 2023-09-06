@@ -2,6 +2,7 @@ const num = document.querySelectorAll('.btn.num');
 const operator = document.querySelectorAll('.btn.op');
 const display = document.querySelector('.display-value');
 const clear = document.querySelector('.btn.clear');
+const undo = document.querySelector('.btn.undo');
 
 let num1;
 let num2='';
@@ -86,3 +87,7 @@ clear.addEventListener('click', () => {
     cleanVars();
 });
 
+undo.addEventListener('click', () => {
+    display.textContent = display.textContent.slice(0,display.textContent.length-1);
+    num2 = display.textContent;
+})
