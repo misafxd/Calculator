@@ -1,8 +1,9 @@
-const num = document.querySelectorAll('.btn.num');
-const operator = document.querySelectorAll('.btn.op');
+const num = document.querySelectorAll('.num');
+const operator = document.querySelectorAll('.op');
 const display = document.querySelector('.display-value');
-const clear = document.querySelector('.btn.clear');
-const undo = document.querySelector('.btn.undo');
+const clear = document.querySelector('.clear');
+const undo = document.querySelector('.undo');
+const dot = document.querySelector('.dot');
 
 let num1;
 let num2='';
@@ -62,6 +63,17 @@ num.forEach(button => {
     })
 })
 
+function showResult(n){
+    if(n == 'ERROR'){
+        return n;
+    }
+    if (n % 1 !== 0) { //float
+        return n.toFixed(2);
+      } else {
+        return n //int
+      }
+}
+
 operator.forEach(button => {
     button.addEventListener('click', () => {
         if(!num1){
@@ -72,10 +84,11 @@ operator.forEach(button => {
                 num1= display.textContent;
             }
         } else if(num1 && num2 || op == '='){
-            result = operate(op,num1,num2);
+                result = operate(op,num1,num2);
                 num1 = result;
-                display.textContent = result.toFixed(2);
-                num2 = ''
+                dot.disabled = false;
+                display.textContent = showResult(result);
+                num2 = '';         
         } else if(op != '='){
                 op = button.textContent;
         }
@@ -89,11 +102,19 @@ operator.forEach(button => {
 
 clear.addEventListener('click', () => {
     cleanVars();
+    dot.disabled = false;
 });
 
 undo.addEventListener('click', () => {
+    if(display.textContent.charAt(display.textContent.length-1)=== '.'){
+        dot.disabled = false;
+    }
     display.textContent = display.textContent.slice(0,display.textContent.length-1);
     if(num1){   
         num2 = display.textContent;
     }
+})
+
+dot.addEventListener('click', () => {
+    dot.disabled = true;
 })
