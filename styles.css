@@ -1,14 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&display=swap");
 :root {
-  --primary-font: "Lora", serif;
+    --primary-font: "Lora", serif;
 }
 
 * {
-  font-family: var(--primary-font);
-  font-size: 16px;
+    margin: 0;
+    font-family: var(--primary-font);
+    font-size: 16px;
 }
 
 body {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #50E3C2;
     background-image: 
         radial-gradient(at 47% 33%, hsl(162.86, 67%, 53%) 0, transparent 59%), 
@@ -25,7 +31,7 @@ body {
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     padding: 1rem;
-    max-width: 25rem;
+    min-width: 15rem;
     border-radius: 0.5rem;
     
     .display-value { grid-area: 1 / 1 / 2 / 5; }
@@ -47,18 +53,31 @@ body {
     .btn.num.num0 { grid-area: 6 / 1 / 7 / 2; }
     .btn.num.dot { grid-area: 6 / 2 / 7 / 3; }
     .btn.undo{ grid-area: 6 / 3 / 7 / 4; }
+}
 
+.display-value{
+    border-radius: 0.25rem;
+    height: 2rem;
+    padding: 0.5rem;
+    text-align: end;
+    margin-block-end: 0.5rem;
+}
 
-    .display-value{
-        border-radius: 0.25rem;
-        height: 2rem;
-        padding: 0.5rem;
-        text-align: end;
-        
-    }
+.btn, .display-value{
+    background: rgba(255,255,255,0.4);
+    border: 1px solid rgba(255,255,255,0.2);
 
-    .btn, .display-value{
-        background: rgba(255,255,255,0.4);
-        border: 1px solid rgba(255,255,255,0.2);
-    }
+}
+
+.btn{
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.btn:hover{
+    transform: scale(105%);
+}
+
+.btn:active{
+    transform: scale(95%);
 }
