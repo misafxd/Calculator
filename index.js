@@ -4,6 +4,65 @@ const display = document.querySelector('.display-value');
 const clear = document.querySelector('.clear');
 const undo = document.querySelector('.undo');
 const dot = document.querySelector('.dot');
+const btn = document.querySelectorAll('.btn');
+
+window.addEventListener('keypress', (e) => {
+    if (e.key.match(/[0-9]/)) {
+        if (!num1) {
+            display.textContent += e.key;
+        } else {
+            num2 += e.key;
+            display.textContent = num2;
+        }
+    } else if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
+        if (!num1) {
+            if (e.key === '-' && display.textContent === '') {
+                display.textContent += e.key;
+            } else {
+                op = e.key;
+                dot.disabled = false;
+                num1 = display.textContent;
+            }
+        } else if (num1 && num2 || op === 'Enter') {
+            result = operate(op, num1, num2);
+            num1 = result;
+            dot.disabled = false;
+            display.textContent = showResult(result);
+            num2 = '';
+        } else if (op !== 'Enter') {
+            op = e.key;
+        }
+    } else if (e.key === 'Enter') {
+        if (num1 && num2) {
+            result = operate(op, num1, num2);
+            num1 = result;
+            dot.disabled = false;
+            display.textContent = showResult(result);
+            num2 = '';
+            op = '=';
+        }
+    } else if (e.key == 'Backspace') {
+        if (display.textContent.charAt(display.textContent.length - 1) === '.') {
+            dot.disabled = false;
+        }
+        display.textContent = display.textContent.slice(0, display.textContent.length - 1);
+        if (num1) {
+            num2 = display.textContent;
+        }
+    } else if (e.key === '.') {
+        dot.disabled = true;
+    }
+    if(e.key == 'Delete'){
+        cleanVars();
+        dot.disabled = false;
+    }
+    if (num1 === 'ERROR') {
+            setTimeout(() => {
+                cleanVars();
+            }, 500);
+    }
+});
+
 
 let num1;
 let num2='';
@@ -61,6 +120,7 @@ num.forEach(button => {
             display.textContent = num2;
         }
     })
+
 })
 
 function showResult(n){
@@ -119,3 +179,4 @@ undo.addEventListener('click', () => {
 dot.addEventListener('click', () => {
     dot.disabled = true;
 })
+
