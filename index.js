@@ -77,10 +77,11 @@ function showResult(n){
 operator.forEach(button => {
     button.addEventListener('click', () => {
         if(!num1){
-            if(button.textContent == '-'){
+            if(button.textContent == '-' && display.textContent == ''){
                 display.textContent += button.textContent;
             } else{
                 op= button.textContent;
+                dot.disabled = false;
                 num1= display.textContent;
             }
         } else if(num1 && num2 || op == '='){
